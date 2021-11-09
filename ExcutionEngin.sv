@@ -118,8 +118,46 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                   Stop: $stop;
 
                   matrixAdd:begin
-                     //nothing yet
-                  end
+                     case (clkCounter)
+                        //Begin Get data from main Mem
+                        1: begin //prepare to get src1 data
+                           nRead = 0;
+                           address = 16'h 2000 + src1Address;
+                        end
+                        3: begin    //Get src1 data and prepare to get src2 data
+                           src1Data = MemDataOut;
+                           address = 16'h 2000 + src2Address;
+                        end
+                        5: begin    //Get src2 Data
+                           src2Data = MemDataOut;
+                           nRead = 1;
+                        end
+                        6: nRead = 0;
+                        //End get data from main memory
+
+                        //Begin put data in MatrixALU
+                        7:begin
+                           address = 16'h 2000_0000_0001_0000;  //Matrix add src1 Address
+                           ExeDataOut = src1Data;
+                           nWrite = 0;
+                        end
+                        9:nWrite = 1;
+                        10:begin  //Computation and put out data
+                           adress = 16'h 2000_0000_0001_0001;
+                           ExeDataOut = src2Data;
+                           nWrite = 0;
+                        end
+                        12:begin
+                           //defult should be if complueate, then read the data from the ALu.
+                           $display ("Sorce 1:%d\n",src1Data);
+                           $display ("Sorce 2:%d\n",src2Data);
+                           $display ("Result is :%d\n",Result);
+                        end//8
+
+                     if (clkCounter != 0) begin    //Does this every time
+                        clkCounter++;
+                     end//if
+                  end//intAdd
 
                   matrixSub:begin
                      //nothing yet
@@ -157,38 +195,38 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                            ExeDataOut = Result;
                            nWrite = 0;
                         end
-                     8:begin  //end add case
-                        nWrite = 1;
-                        PC++;
-                        clkCounter = 0;   //Sets to get the next instruction
-                        ExeDataOut = 256'b x;   //Stop outputing data
-                        $display ("Sorce 1:%d\n",src1Data);
-                        $display ("Sorce 2:%d\n",src2Data);
-                        $display ("Result is :%d\n",Result);
-                     end//8
-                  endcase//intAdd
+                        8:begin  //end add case
+                           nWrite = 1;
+                           PC++;
+                           clkCounter = 0;   //Sets to get the next instruction
+                           ExeDataOut = 256'b x;   //Stop outputing data
+                           $display ("Sorce 1:%d\n",src1Data);
+                           $display ("Sorce 2:%d\n",src2Data);
+                           $display ("Result is :%d\n",Result);
+                        end//8
+                     endcase//intAdd
 
-                  if (clkCounter != 0) begin
-                     clkCounter++;
+                     if (clkCounter != 0) begin
+                        clkCounter++;
+                     end
                   end
-               end
 
-               intSub: begin
-                  //nothing yet
-               end
+                  intSub: begin
+                     //nothing yet
+                  end
 
-               intMultiply:begin
-                  //nothing yet
-               end
+                  intMultiply:begin
+                     //nothing yet
+                  end
 
-               intDiv:begin
-                  //nothing yet
-               end //intDiv
-            endcase//operation
-         end //ExcuteInstruction
-         default: ;//default case does nothing
-      endcase //currentOperation
-   end ////(nReset != 0 && complete == 0)
-end //always_ff @(posedge Clk)
+                  intDiv:begin
+                     //nothing yet
+                  end //intDiv
+               endcase//operation
+            end //ExcuteInstruction
+            default: ;//default case does nothing
+         endcase //currentOperation
+      end ////if(nReset != 0 && complete == 0)
+   end //always_ff @(posedge Clk)
 
 endmodule

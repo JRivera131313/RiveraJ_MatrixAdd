@@ -41,11 +41,9 @@ module InstructionMemory(Clk, DataOut, address, nRead, nReset);
    output logic [255:0] DataOut;
    reg [31:0]instructMem[9:0];
 
-   ////////// instruction memory parameters. To be loaded into instruction memory at nreset = 0;
-   parameter Instruct1 = 32'h 10_02_00_01;
-   //add the data at location 0 to the data at location 1 and place result in location 2
-   parameter Instruct2 = 32'h FF_00_00_00;
-   //STOP
+   
+   parameter Instruct1 = 32'h 01_02_00_01;  // ADD matrix at memory location 0 to memory location 1 store in memory location 2
+   parameter Instruct2 = 32'h FF_00_00_00;  //Stop
    parameter Instruct3 = 32'h 02_03_03_00;
    //Transpose the result from step 1 store in memory
    parameter Instruct4 = 32'h 03_04_01_ff;

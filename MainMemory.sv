@@ -31,17 +31,16 @@
 //Main Mem
 module MainMemory(Clk, DataOut,DataIn, address, nRead, nWrite, nReset);
 
-   parameter matrixMemory0 = 256'h0004_000c_0004_0022_0007_0006_000b_0009_0009_0002_0008_000d_0002_000f_0010_0003;
-   parameter matrixMemory1 = 256'h0017_002d_0043_0016_0007_0006_0004_0001_0012_0038_000d_000c_0003_0005_0007_0009;
-
-
+   parameter matrixMemory0 = 256'h0001_0002_0003_0004_0005_0006_0007_0008_0009_000a_000b_000c_000d_000e_000f_0010;
+   parameter matrixMemory1 = 256'h0020_001f_001e_001d_001c_001b_001a_0019_0018_0017_0016_0015_0014_0013_0012_0011;
 
    input logic nRead, nWrite, nReset, Clk;
    input logic [15:0] address;
    input logic [255:0] DataIn;
    output logic [255:0] DataOut;
    int typeMemAccess,memLocation,row,column;
-   reg [3:0][3:0][15:0]mainMemArray[15:0];  //16 4x4x16 bit arrays total of 256bits
+   //reg [3:0][3:0][15:0]mainMemArray[15:0];  //16 4x4x16 bit arrays total of 256bits
+   logic [255:0]MainMemory[12]; // this is the physical memory For matrixALU Asignmet
    always @ (address) begin
       memLocation = address[11:0];
    end
