@@ -1,0 +1,24 @@
+# Current time Thu Nov  4 00:36:49 2021
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 006422c1. Traceback:
+# 0    0x006422c1: 'WinMain + 0xf0cf1'
+# 1    0x0064f0e8: 'WinMain + 0xfdb18'
+# 2    0x0059368e: 'WinMain + 0x420be'
+# 3    0x00730c82: 'Sqlite3_Unload + 0x15b72'
+# 4    0x005912c8: 'WinMain + 0x3fcf8'
+# 5    0x005914db: 'WinMain + 0x3ff0b'
+# 6    0x004e483e: 'mti_strlen + 0x473be'
+# 7    0x7a609d91: 'TclCallVarTraces + 0x2e1'
+# 8    0x7a614d3f: 'Tcl_FindNamespaceVar + 0x18f'
+# 9    0x7a5b36ad: 'Tcl_CreateHashEntry + 0xad'
+# 10   0x7a610270: 'TclObjLookupVar + 0x990'
+# 11   0x7a60fd38: 'TclObjLookupVar + 0x458'
+StackWalk failed 299
+# End of Stack Trace
+

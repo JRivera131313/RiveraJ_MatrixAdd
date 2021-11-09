@@ -1,0 +1,160 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/jrriv/Documents/MemoryAsignment
+vExecution
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1636068392
+!i10b 1
+!s100 =WV0;g[z4k8EnQD]9ZKnI2
+IFK7g?DX<Pd1<Jl^P;7f[W0
+S1
+Z1 dC:/Users/jrriv/Documents/Excutre
+w1636067823
+8C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/ExcutionEngin.sv
+FC:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/ExcutionEngin.sv
+!i122 168
+L0 16 179
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+!s108 1636068391.000000
+!s107 C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/ExcutionEngin.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/ExcutionEngin.sv|
+!i113 1
+Z4 o-work work -sv
+Z5 tCvgOpt 0
+n@execution
+vInstructionMemory
+R0
+Z6 !s110 1636068393
+!i10b 1
+!s100 8B2^WJ?AW2K?j5^1HTU9g0
+In?=;k?kMZ3WdWUTnZRQ9n2
+S1
+R1
+w1636002519
+8C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/InstructionMemory.sv
+FC:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/InstructionMemory.sv
+!i122 173
+L0 38 50
+R2
+R3
+r1
+!s85 0
+31
+Z7 !s108 1636068393.000000
+!s107 C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/InstructionMemory.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/InstructionMemory.sv|
+!i113 1
+R4
+R5
+n@instruction@memory
+vMainMemory
+R0
+R6
+!i10b 1
+!s100 0YZjBnO^[L3[GIFZY3QQo1
+IA06XmWKCRZZi?LPg6HO;50
+S1
+R1
+w1636067809
+8C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/MainMemory.sv
+FC:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/MainMemory.sv
+!i122 174
+L0 32 40
+R2
+R3
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/MainMemory.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/MainMemory.sv|
+!i113 1
+R4
+R5
+n@main@memory
+vTestExe
+R0
+R6
+!i10b 1
+!s100 VhD=dMC1@QQ>6QB:IBG;:3
+I20NbJBfLUUId]angzMdX:2
+S1
+R1
+w1636002059
+8C:/Users/jrriv/Documents/Excutre/TestBench.sv
+FC:/Users/jrriv/Documents/Excutre/TestBench.sv
+!i122 176
+L0 6 15
+R2
+R3
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/jrriv/Documents/Excutre/TestBench.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/Documents/Excutre/TestBench.sv|
+!i113 1
+R4
+R5
+n@test@exe
+vTestMem
+R0
+!s110 1636001911
+!i10b 1
+!s100 S?4U9Y?]3Vf7EM69Qn3_=0
+IEmkY<_c^ziQ3z?zSjJSa30
+S1
+R1
+w1634346796
+8C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/TestBenchForSubmmistion.sv
+FC:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/TestBenchForSubmmistion.sv
+!i122 20
+L0 14 81
+R2
+R3
+r1
+!s85 0
+31
+!s108 1636001911.000000
+!s107 C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/TestBenchForSubmmistion.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/TestBenchForSubmmistion.sv|
+!i113 1
+R4
+R5
+n@test@mem
+vtop
+R0
+R6
+!i10b 1
+!s100 B0g:QfWJIo6zgoN0W2zf=3
+I]fYSgeBJ>8Old1]U_Mcl=2
+S1
+R1
+w1635874325
+8C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/Top.sv
+FC:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/Top.sv
+!i122 175
+L0 9 22
+R2
+R3
+r1
+!s85 0
+31
+R7
+!s107 C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/Top.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/jrriv/OneDrive - Texas State University/Fall 2021/SystemHDL/Assignments/RiveraJ_Excution/Top.sv|
+!i113 1
+R4
+R5
