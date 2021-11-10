@@ -41,55 +41,84 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset)
 
       end
       if (address[15:12]== 4'h 2 && nReset != 0) begin
-         case (address[7:4])
-            MULTIPLY:begin
-               //nothing yet
-            end
 
-            ADD:begin
-               if (address[3:0] == 3) begin //Do the addition operation
+         if (nWrite == 0 && nRead != 0) begin //Get data from Excution
+            case (address[3:0])
+               0:src1Data = ExeDataOut;
+               1:src2Data = ExeDataOut;
+               default: ;//Nothing yet, Error code eventualy ;
+            endcase
+         end
+
+         if (nRead == 0 && nWrite != 0) begin //Data out to Excution
+            if (address[3:0] == 4'b 0010) begin
+               MatrixDataOut = result;
+            end
+         end
+
+         if (address[3:0] == 4'h 3) begin
+            case (address[7:4])
+               MULTIPLY:begin
+                  result = 0;
+                  for (int Row = 0; Row < 4; Row++) begin
+                     for (int Colum = 0; Colum < 4; Colum++) begin
+                        for (int kounter = 0; kounter < 4; kounter++) begin
+                           result[Row][Colum] = result [Row][Colum] + (src1Data[Row][kounter] * src2Data[kounter][Colum]);
+                        end
+                     end
+                  end
+                  $display("Matrix Multiply Result is: %h",result);
+               end
+
+               ADD:begin
                   for (int i = 0; i < 4; i++) begin
                      for (int j = 0; j < 4; j++) begin
                         result[i][j] = src1Data[i][j] + src2Data[i][j];
-                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
-
                      end
                   end
+                  $display("Add Result is: %h",result);
                end
 
-               if (nWrite == 0 && nRead != 0) begin //Get data from Excution
-                  case (address[3:0])
-                     0:src1Data = ExeDataOut;
-                     1:src2Data = ExeDataOut;
-                     default: ;//Nothing yet, Error code eventualy ;
-                  endcase
-               end
-
-               if (nRead == 0 && nWrite != 0) begin //Data out to Excution
-                  if (address[3:0] == 4'b 0010) begin
-                     MatrixDataOut = result;
+               SUBTRACT:begin
+                  for (int i = 0; i < 4; i++) begin
+                     for (int j = 0; j < 4; j++) begin
+                        result[i][j] = src1Data[i][j] - src2Data[i][j];
+                     end
                   end
+                  $display("Subtract  Result is: %h",result);
                end
 
-            end
+               TRANSPOSE: begin
+                  result = 0;
+                  for (int Row = 0; Row < 4; Row++) begin
+                     for (int Colum = 0; Colum < 4; Colum++) begin
+                        result[Row][Colum] = src1Data[Colum][Row];
+                     end
+                  end
+                  $display("Transpose Result is: %h",result);
+               end
 
-            SUBTRACT:begin
-               //nothing yet
-            end
+               SCALE: begin
+                  for (int i = 0; i < 4; i++) begin
+                     for (int j = 0; j < 4; j++) begin
+                        result[i][j] = src1Data[i][j] * src2Data;
+                     end
+                  end
+                  $display ("Scale Result is :%h\n",result);
+               end
 
-            TRANSPOSE:begin
-               //NOthing yet
-            end
+               SCALEIMMEDIATE: begin
+                  for (int i = 0; i < 4; i++) begin
+                     for (int j = 0; j < 4; j++) begin
+                        result[i][j] = src1Data[i][j] * src2Data;
+                     end
+                  end
+                  $display ("ScaleImmediate Result is :%h\n",result);
+               end
+               default: ;//Does nothing for now, will determ and code for errors later  ;
+            endcase
+         end
 
-            SCALE:begin
-               //Nothing yet
-            end
-
-            SCALEIMMEDIATE: begin
-               //nothing yet
-            end
-            default: ;//Does nothing for now, will determ and code for errors later  ;
-         endcase
       end
    end
 
