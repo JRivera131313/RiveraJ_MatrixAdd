@@ -324,7 +324,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                   end
 
                   MATRIXSCALE:begin
-                     //nothing yet
+
                   end
 
                   MATRIXSCALEIMMEDIATE:begin
