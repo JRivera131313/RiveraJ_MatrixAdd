@@ -37,9 +37,12 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset)
    reg [3:0][3:0][15:0] result;
 
    always @ (posedge Clk or negedge nReset ) begin
-      if (nReset == 0) begin
-
+      if (nReset == 0) begin //Rest condion
+         src1Data = 0;
+         src2Data = 0;
+         result = 0;
       end
+
       if (address[15:12]== 4'h 2 && nReset != 0) begin
 
          if (nWrite == 0 && nRead != 0) begin //Get data from Excution
