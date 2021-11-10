@@ -198,30 +198,30 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                            ExeDataOut = src1Data;
                            nWrite = 0;
                         end
-                        9:nWrite = 1;
-                        10:begin  //write data2 to ALU
+                        8:nWrite = 1;
+                        9:begin  //write data2 to ALU
                            address = 16'b 0010_0000_0001_0001;
                            ExeDataOut = src2Data;
                            nWrite = 0;
                         end
-                        12:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                        10:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
                            address = 16'b 0010_0000_0001_0011;
                         end
-                        13:begin
+                        11:begin
                            nWrite = 1;
                            nRead = 0;
                            address = 16'b 0010_0000_0001_0010;//Result Address
                         end
-                        15:begin
+                        13:begin
                            Result = MatrixDataOut;
                            nRead = 1;
                         end
-                        17:begin
+                        14:begin
                            ExeDataOut = Result;
                            nWrite = 0;
                            address = 16'h 0000 + destAddress;
                         end
-                        19:begin
+                        15:begin
                            currentOperation = Clear;
                         end
                      endcase
