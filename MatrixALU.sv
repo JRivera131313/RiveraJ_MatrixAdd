@@ -59,47 +59,61 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset)
          if (address[3:0] == 4'h 3) begin
             case (address[7:4])
                MULTIPLY:begin
-                  //nothing yet
+                  result = 0;
+                  for (int Row = 0; Row < 4; Row++) begin
+                     for (int Colum = 0; Colum < 4; Colum++) begin
+                        for (int kounter = 0; kounter < 4; kounter++) begin
+                           result[Row][Colum] = result [Row][Colum] + (src1Data[Row][kounter] * src2Data[kounter][Colum]);
+                        end
+                     end
+                  end
+                  $display("Matrix Multiply Result is: %h",result);
                end
 
                ADD:begin
                   for (int i = 0; i < 4; i++) begin
                      for (int j = 0; j < 4; j++) begin
                         result[i][j] = src1Data[i][j] + src2Data[i][j];
-                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
                      end
                   end
+                  $display("Add Result is: %h",result);
                end
 
                SUBTRACT:begin
                   for (int i = 0; i < 4; i++) begin
                      for (int j = 0; j < 4; j++) begin
                         result[i][j] = src1Data[i][j] - src2Data[i][j];
-                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
                      end
                   end
+                  $display("Subtract  Result is: %h",result);
                end
 
                TRANSPOSE: begin
-                  //nothing yet
+                  result = 0;
+                  for (int Row = 0; Row < 4; Row++) begin
+                     for (int Colum = 0; Colum < 4; Colum++) begin
+                        result[Row][Colum] = src1Data[Colum][Row];
+                     end
+                  end
+                  $display("Transpose Result is: %h",result);
                end
 
                SCALE: begin
                   for (int i = 0; i < 4; i++) begin
                      for (int j = 0; j < 4; j++) begin
                         result[i][j] = src1Data[i][j] * src2Data;
-                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
                      end
                   end
+                  $display ("Scale Result is :%h\n",result);
                end
 
                SCALEIMMEDIATE: begin
                   for (int i = 0; i < 4; i++) begin
                      for (int j = 0; j < 4; j++) begin
                         result[i][j] = src1Data[i][j] * src2Data;
-                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
                      end
                   end
+                  $display ("ScaleImmediate Result is :%h\n",result);
                end
                default: ;//Does nothing for now, will determ and code for errors later  ;
             endcase

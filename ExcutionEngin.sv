@@ -282,7 +282,45 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                   end
 
                   MATRIXTRANSPOSE:begin
-                     //nothing yet
+                     case (clkCounter)
+                        //Begin Get data from main Mem
+                        1: begin //prepare to get src1 data
+                           nRead = 0;
+                           address = 16'h 0000 + src1Address;
+                        end
+
+                        //End get data from main memory
+                        //Begin put data in MatrixALU
+                        3:begin
+                           address = 16'b 0010_0000_0011_0000;  //Matrix add src1 Address
+                           ExeDataOut = src1Data;
+                           nWrite = 0;
+                        end
+                        5:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                           nWrite = 1;
+                           address = 16'b 0010_0000_0011_0011;
+                        end
+                        6:begin
+                           nRead = 0;
+                           address = 16'b 0010_0000_0011_0010;//Result Address
+                        end
+                        7:begin
+                           Result = MatrixDataOut;
+                           nRead = 1;
+                        end
+                        8:begin
+                           ExeDataOut = Result;
+                           nWrite = 0;
+                           address = 16'h 0000 + destAddress;
+                        end
+                        10:begin
+                           nWrite = 1;
+                           currentOperation = Clear;
+                        end
+                     endcase
+                     if (clkCounter != 0) begin    //Does this every time
+                        clkCounter++;
+                     end
                   end
 
                   MATRIXSCALE:begin
