@@ -14,14 +14,13 @@
 //	then Adress will translate that to a 12 bit 000000000004
 //
 module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, address, nRead,nWrite, nReset);
-   parameter  FetchInstuction = 1;
-   parameter  DecodeInstuction= 2;
-   parameter  ReadInstuction = 3;
-   parameter  ExcuteInstruction = 4;
-   parameter  Clear = 5;
+   parameter  FETCHINSTUCTION = 1;
+   parameter  DECODEINSTUCTION= 2;
+   parameter  EXCUTEINSTUCTION = 3;
+   parameter  CLEAR = 4;
 
    //opCode instuctions
-   parameter  STOP = 8'h FF;  //STOP the processer
+   parameter STOP = 8'h FF;  //STOP the processer
    parameter MATRIXMULTIPLY = 8'h 00;
    parameter MATRIXADD = 8'h 01;
    parameter MATRIXSUB = 8'h 02;
@@ -56,9 +55,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
 	reg [7:0] src1Address;
 	reg [7:0] src2Address;
 	///////////////////////////////////////////////////////////////////
-	// Sudo ALU code. A ALU should be doing this in the project but
-	// for this asignment it is done inside the excution since the ALU
-	// Doesnt exist yet.
+   //ONBOARD MEMORY///
 	reg [255:0] Result;
 	reg [255:0] src1Data;
 	reg [255:0] src2Data;
@@ -86,11 +83,11 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
       if (nReset != 0 && complete == 0) begin //load instuction in not compleate
 
          if (clkCounter == 0) begin //Sets to get instcutins
-            currentOperation = FetchInstuction;
+            currentOperation = FETCHINSTUCTION;
          end
 
          case (currentOperation)
-            FetchInstuction: begin
+            FETCHINSTUCTION: begin
                case (clkCounter)
                   0: begin //Prepares to get instuction data
                      nRead = 0;
@@ -100,22 +97,22 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                   2: opCode = InstructDataOut;  //Gets instuction data
                   3: begin //Sets for next operation
                      nRead = 1;
-                     currentOperation = DecodeInstuction;
+                     currentOperation = DECODEINSTUCTION;
                      clkCounter = 0;
                   end
                endcase
                clkCounter++;
             end
 
-            DecodeInstuction: begin       //Breakes opCode into more readable chunks
+            DECODEINSTUCTION: begin       //Breakes opCode into more readable chunks
                operation = opCode[31:24];
                destAddress = opCode[23:16];
                src1Address = opCode[15:8];
                src2Address = opCode[7:0];
-               currentOperation = ExcuteInstruction;
+               currentOperation = EXCUTEINSTUCTION;
             end
 
-            ExcuteInstruction: begin
+            EXCUTEINSTUCTION: begin
                case (operation)
                   STOP: $stop;
 
@@ -165,7 +162,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         13:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -219,7 +216,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         13:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -273,7 +270,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         13:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -315,7 +312,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         10:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -369,7 +366,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         13:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -422,7 +419,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                         end
                         13:begin
                            nWrite = 1;
-                           currentOperation = Clear;
+                           currentOperation = CLEAR;
                         end
                      endcase
                      if (clkCounter != 0) begin    //Does this every time
@@ -478,9 +475,9 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                      //nothing yet
                   end //INTDIV
                endcase//operation
-            end //ExcuteInstruction
+            end //EXCUTEINSTUCTION
 
-            Clear:begin
+            CLEAR:begin
                PC++;
                nWrite = 1;
                nRead = 1;
