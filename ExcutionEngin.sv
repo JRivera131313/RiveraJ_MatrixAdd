@@ -137,22 +137,39 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
 
                         //Begin put data in MatrixALU
                         7:begin
-                           address = 16'h 2000_0000_0001_0000;  //Matrix add src1 Address
+                           address = 16'b 0010_0000_0001_0000;  //Matrix add src1 Address
                            ExeDataOut = src1Data;
                            nWrite = 0;
                         end
                         9:nWrite = 1;
-                        10:begin  //Computation and put out data
-                           adress = 16'h 2000_0000_0001_0001;
+                        10:begin  //write data2 to ALU
+                           adress = 16'b 0010_0000_0001_0001;
                            ExeDataOut = src2Data;
                            nWrite = 0;
                         end
-                        12:begin
-                           //defult should be if complueate, then read the data from the ALu.
-                           $display ("Sorce 1:%d\n",src1Data);
-                           $display ("Sorce 2:%d\n",src2Data);
-                           $display ("Result is :%d\n",Result);
-                        end//8
+                        12:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                           address = 16'b 0010_0000_0001_0011;
+                        end
+                        13:begin
+                           nWrite = 1;
+                           nRead = 0;
+                           address = 16'b 0010_0000_0001_0010;//Result Address
+                        end
+                        15:begin
+                           Result = MatrixDataOut;
+                           nRead = 1;
+                        end
+                        17:begin
+                           ExeDataOut = Result;
+                           nWrite = 0;
+                           address = 16'h 0000 + destAddress;
+                        end
+                        19:begin
+                           clkCounter = 0;
+                           nRead = 1;
+                           nWrite = 1;
+                           ExeDataOut = 256'b x;
+                        end
 
                      if (clkCounter != 0) begin    //Does this every time
                         clkCounter++;
