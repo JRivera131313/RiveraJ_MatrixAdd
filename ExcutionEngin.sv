@@ -324,11 +324,110 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                   end
 
                   MATRIXSCALE:begin
+                     case (clkCounter)
+                        //Begin Get data from main Mem
+                        1: begin //prepare to get src1 data
+                           nRead = 0;
+                           address = 16'h 0000 + src1Address;
+                        end
+                        3: begin    //Get src1 data and prepare to get src2 data
+                           src1Data = MemDataOut;
+                           address = 16'h 0000 + src2Address;
+                        end
+                        5: begin    //Get src2 Data
+                           src2Data = MemDataOut;
+                           nRead = 1;
+                        end
+                        //End get data from main memory
 
+                        //Begin put data in MatrixALU
+                        6:begin
+                           address = 16'b 0010_0000_0100_0000;  //Matrix add src1 Address
+                           ExeDataOut = src1Data;
+                           nWrite = 0;
+                        end
+                        7:begin  //write data2 to ALU
+                           address = 16'b 0010_0000_0100_0001;
+                           ExeDataOut = src2Data;
+                        end
+                        8:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                           nWrite = 1;
+                           address = 16'b 0010_0000_0100_0011;
+                        end
+                        9:begin
+                           nRead = 0;
+                           address = 16'b 0010_0000_0100_0010;//Result Address
+                        end
+                        11:begin
+                           Result = MatrixDataOut;
+                           nRead = 1;
+                        end
+                        12:begin
+                           ExeDataOut = Result;
+                           nWrite = 0;
+                           address = 16'h 0000 + destAddress;
+                        end
+                        13:begin
+                           nWrite = 1;
+                           currentOperation = Clear;
+                        end
+                     endcase
+                     if (clkCounter != 0) begin    //Does this every time
+                        clkCounter++;
+                     end//if
                   end
 
                   MATRIXSCALEIMMEDIATE:begin
-                     //nothing yet
+                     case (clkCounter)
+                        //Begin Get data from main Mem
+                        1: begin //prepare to get src1 data
+                           nRead = 0;
+                           address = 16'h 0000 + src1Address;
+                        end
+                        3: begin    //Get src1 data and prepare to get src2 data
+                           src1Data = MemDataOut;
+                           src2Data = src2Address;
+                        end
+                        5: begin    //Get src2 Data
+                           nRead = 1;
+                        end
+                        //End get data from main memory
+
+                        //Begin put data in MatrixALU
+                        6:begin
+                           address = 16'b 0010_0000_0101_0000;  //Matrix add src1 Address
+                           ExeDataOut = src1Data;
+                           nWrite = 0;
+                        end
+                        7:begin  //write data2 to ALU
+                           address = 16'b 0010_0000_0101_0001;
+                           ExeDataOut = src2Data;
+                        end
+                        8:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                           nWrite = 1;
+                           address = 16'b 0010_0000_0101_0011;
+                        end
+                        9:begin
+                           nRead = 0;
+                           address = 16'b 0010_0000_0101_0010;//Result Address
+                        end
+                        11:begin
+                           Result = MatrixDataOut;
+                           nRead = 1;
+                        end
+                        12:begin
+                           ExeDataOut = Result;
+                           nWrite = 0;
+                           address = 16'h 0000 + destAddress;
+                        end
+                        13:begin
+                           nWrite = 1;
+                           currentOperation = Clear;
+                        end
+                     endcase
+                     if (clkCounter != 0) begin    //Does this every time
+                        clkCounter++;
+                     end//if
                   end
 
                   INTADD:begin

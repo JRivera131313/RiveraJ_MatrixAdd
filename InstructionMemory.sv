@@ -48,11 +48,11 @@ module InstructionMemory(Clk, DataOut, address, nRead, nReset);
    //Transpose the result from step 1 store in memory
    parameter Instruct4 = 32'h 03_05_00_00;
    //Scale the result in step 3 by the result from step 2 store in a matrix register
-   parameter Instruct5 = 32'h 04_05_03_80;
+   parameter Instruct5 = 32'h 04_06_00_09;
    //Multiply the result from step 4 by the result in step 3, store in memory.
-   parameter Instruct6 = 32'h 00_06_04_03;
+   parameter Instruct6 = 32'h 05_07_00_64;
    //Multiply memory location 0 to location 1. Store it in memory location 0A
-   parameter Instruct7 = 32'h 12_0A_00_01;
+   parameter Instruct7 = 32'h FF_0A_00_01;
    //Subtract Memory 01 from memory location 0A and store it in a register
    parameter Instruct8 = 32'h 11_0A_01_81;
    //Divide Memory location 0A by the register in step 8 and store it in location B

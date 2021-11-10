@@ -33,6 +33,7 @@ module MainMemory(Clk, DataOut,DataIn, address, nRead, nWrite, nReset);
 
    parameter matrixMemory0 = 256'h0001_0002_0003_0004_0005_0006_0007_0008_0009_000a_000b_000c_000d_000e_000f_0010;
    parameter matrixMemory1 = 256'h0020_001f_001e_001d_001c_001b_001a_0019_0018_0017_0016_0015_0014_0013_0012_0011;
+   parameter matrixMemory10 = 10;
 
    input logic nRead, nWrite, nReset, Clk;
    input logic [15:0] address;
@@ -54,6 +55,7 @@ module MainMemory(Clk, DataOut,DataIn, address, nRead, nWrite, nReset);
 		   //mainMemArray[1] <= matrixMemory1;
          MainMemory[0] <= matrixMemory0;
          MainMemory[1] <= matrixMemory1;
+         MainMemory[9] <= matrixMemory10;
          DataOut <= 0;
       end
 
