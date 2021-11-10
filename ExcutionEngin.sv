@@ -21,16 +21,17 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
    parameter  Clear = 5;
 
    //opCode instuctions
-   parameter  Stop = 8'h FF;  //Stop the processer
-   parameter matrixAdd = 8'h 01;
-   parameter matrixSub = 8'h 02;
-   parameter matrixTranspose = 8'h 03;
-   parameter matrixScale = 8'h 04;
-   parameter matrixScaleImmediate = 8'h 05;
-   parameter intAdd = 8'h 10;
-   parameter intSub = 8'h 11;
-   parameter intMultiply = 8'h 12;
-   parameter intDiv = 8'h 13;
+   parameter  STOP = 8'h FF;  //STOP the processer
+   parameter MATRIXMULTIPLY = 8'h 00;
+   parameter MATRIXADD = 8'h 01;
+   parameter MATRIXSUB = 8'h 02;
+   parameter MATRIXTRANSPOSE = 8'h 03;
+   parameter MATRIXSCALE = 8'h 04;
+   parameter MATRIXSCALEIMMEDIATE = 8'h 05;
+   parameter INTADD = 8'h 10;
+   parameter INTSUB = 8'h 11;
+   parameter INTMULTIPLY = 8'h 12;
+   parameter INTDIV = 8'h 13;
    //Extra for expanding operations
    //parameter Extra1 = 8'h A1;
    //parameter Extra2 = 8'h A2;
@@ -116,9 +117,9 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
 
             ExcuteInstruction: begin
                case (operation)
-                  Stop: $stop;
+                  STOP: $stop;
 
-                  matrixAdd:begin
+                  MATRIXMULTIPLY: begin
                      case (clkCounter)
                         //Begin Get data from main Mem
                         1: begin //prepare to get src1 data
@@ -133,7 +134,62 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                            src2Data = MemDataOut;
                            nRead = 1;
                         end
-                        //6: nRead = 1;
+                        //End get data from main memory
+
+                        //Begin put data in MatrixALU
+                        7:begin
+                           address = 16'b 0010_0000_0000_0000;  //Matrix add src1 Address
+                           ExeDataOut = src1Data;
+                           nWrite = 0;
+                        end
+                        9:nWrite = 1;
+                        10:begin  //write data2 to ALU
+                           address = 16'b 0010_0000_0000_0001;
+                           ExeDataOut = src2Data;
+                           nWrite = 0;
+                        end
+                        12:begin //Command ALU to do Addition on the data it has, At this point,could put diffrent data into ALU
+                           address = 16'b 0010_0000_0000_0011;
+                        end
+                        13:begin
+                           nWrite = 1;
+                           nRead = 0;
+                           address = 16'b 0010_0000_0000_0010;//Result Address
+                        end
+                        15:begin
+                           Result = MatrixDataOut;
+                           nRead = 1;
+                        end
+                        17:begin
+                           ExeDataOut = Result;
+                           nWrite = 0;
+                           address = 16'h 0000 + destAddress;
+                        end
+                        19:begin
+                           currentOperation = Clear;
+                        end
+                     endcase
+                     if (clkCounter != 0) begin    //Does this every time
+                        clkCounter++;
+                     end//if
+
+                  end //MatrixMultiply
+
+                  MATRIXADD:begin
+                     case (clkCounter)
+                        //Begin Get data from main Mem
+                        1: begin //prepare to get src1 data
+                           nRead = 0;
+                           address = 16'h 0000 + src1Address;
+                        end
+                        3: begin    //Get src1 data and prepare to get src2 data
+                           src1Data = MemDataOut;
+                           address = 16'h 0000 + src2Address;
+                        end
+                        5: begin    //Get src2 Data
+                           src2Data = MemDataOut;
+                           nRead = 1;
+                        end
                         //End get data from main memory
 
                         //Begin put data in MatrixALU
@@ -172,25 +228,25 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                      if (clkCounter != 0) begin    //Does this every time
                         clkCounter++;
                      end//if
-                  end//intAdd
+                  end//INTADD
 
-                  matrixSub:begin
+                  MATRIXSUB:begin
                      //nothing yet
                   end
 
-                  matrixTranspose:begin
+                  MATRIXTRANSPOSE:begin
                      //nothing yet
                   end
 
-                  matrixScale:begin
+                  MATRIXSCALE:begin
                      //nothing yet
                   end
 
-                  matrixScaleImmediate:begin
+                  MATRIXSCALEIMMEDIATE:begin
                      //nothing yet
                   end
 
-                  intAdd:begin
+                  INTADD:begin
                      case (clkCounter)
                         1: begin //prepare to get src1 data
                            nRead = 0;
@@ -214,29 +270,29 @@ module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, addre
                            nWrite = 1;
                            PC++;
                            clkCounter = 0;   //Sets to get the next instruction
-                           ExeDataOut = 256'b x;   //Stop outputing data
+                           ExeDataOut = 256'b x;   //STOP outputing data
                            $display ("Sorce 1:%d\n",src1Data);
                            $display ("Sorce 2:%d\n",src2Data);
                            $display ("Result is :%d\n",Result);
                         end//8
-                     endcase//intAdd
+                     endcase//INTADD
 
                      if (clkCounter != 0) begin
                         clkCounter++;
                      end
                   end //NEED TO REDO FOR PROJECT
 
-                  intSub: begin
+                  INTSUB: begin
                      //nothing yet
                   end
 
-                  intMultiply:begin
+                  INTMULTIPLY:begin
                      //nothing yet
                   end
 
-                  intDiv:begin
+                  INTDIV:begin
                      //nothing yet
-                  end //intDiv
+                  end //INTDIV
                endcase//operation
             end //ExcuteInstruction
 

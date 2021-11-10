@@ -93,6 +93,14 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset)
                   end
                end
 
+               SCALEIMMEDIATE: begin
+                  for (int i = 0; i < 4; i++) begin
+                     for (int j = 0; j < 4; j++) begin
+                        result[i][j] = src1Data[i][j] * src2Data;
+                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
+                     end
+                  end
+               end
                default: ;//Does nothing for now, will determ and code for errors later  ;
             endcase
          end
