@@ -13,7 +13,7 @@
 // 	Address is determined by dest, src1, or src2. If src1 is 0004,
 //	then Adress will translate that to a 12 bit 000000000004
 //
-module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWrite, nReset);
+module Execution (Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, address, nRead,nWrite, nReset);
    parameter  FetchInstuction = 1;
    parameter  DecodeInstuction= 2;
    parameter  ReadInstuction = 3;
@@ -43,6 +43,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
 	input logic nReset,Clk;
 	input logic [255:0] InstructDataOut;
 	input logic [255:0] MemDataOut;
+   input logic [255:0] MatrixDataOut;
 	logic [7:0] clkCounter;	//counts amount of clock cycles for timing
 	logic complete; //Unused for now, planed use in final project is to recive complete bit from ALU's
 	reg [3:0] currentOperation;
@@ -122,17 +123,17 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                         //Begin Get data from main Mem
                         1: begin //prepare to get src1 data
                            nRead = 0;
-                           address = 16'h 2000 + src1Address;
+                           address = 16'h 0000 + src1Address;
                         end
                         3: begin    //Get src1 data and prepare to get src2 data
                            src1Data = MemDataOut;
-                           address = 16'h 2000 + src2Address;
+                           address = 16'h 0000 + src2Address;
                         end
                         5: begin    //Get src2 Data
                            src2Data = MemDataOut;
                            nRead = 1;
                         end
-                        6: nRead = 0;
+                        //6: nRead = 1;
                         //End get data from main memory
 
                         //Begin put data in MatrixALU
@@ -143,7 +144,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                         end
                         9:nWrite = 1;
                         10:begin  //write data2 to ALU
-                           adress = 16'b 0010_0000_0001_0001;
+                           address = 16'b 0010_0000_0001_0001;
                            ExeDataOut = src2Data;
                            nWrite = 0;
                         end
@@ -165,12 +166,9 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                            address = 16'h 0000 + destAddress;
                         end
                         19:begin
-                           clkCounter = 0;
-                           nRead = 1;
-                           nWrite = 1;
-                           ExeDataOut = 256'b x;
+                           currentOperation = Clear;
                         end
-
+                     endcase
                      if (clkCounter != 0) begin    //Does this every time
                         clkCounter++;
                      end//if
@@ -226,7 +224,7 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                      if (clkCounter != 0) begin
                         clkCounter++;
                      end
-                  end
+                  end //NEED TO REDO FOR PROJECT
 
                   intSub: begin
                      //nothing yet
@@ -241,6 +239,14 @@ module Execution (Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWri
                   end //intDiv
                endcase//operation
             end //ExcuteInstruction
+
+            Clear:begin
+               PC++;
+               nWrite = 1;
+               nRead = 1;
+               ExeDataOut = 256'b x;
+               clkCounter = 0;
+            end
             default: ;//default case does nothing
          endcase //currentOperation
       end ////if(nReset != 0 && complete == 0)

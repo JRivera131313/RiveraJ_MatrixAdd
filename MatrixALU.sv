@@ -19,14 +19,16 @@
 //
 //
 //Scale and SCALEIMMEDIATE could use the same exact code
-module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset,);
-   parameter MULTIPLY = 4'h 00;
-   parameter ADD = 4'h 01;
-   parameter SUBTRACT = 4'h 02;
-   parameter TRANSPOSE = 4'h 03;
-   parameter SCALE = 4'h 04;
-   parameter SCALEIMMEDIATE =4'h 05;
+module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset);
+   parameter MULTIPLY = 4'h 0;
+   parameter ADD = 4'h 1;
+   parameter SUBTRACT = 4'h 2;
+   parameter TRANSPOSE = 4'h 3;
+   parameter SCALE = 4'h 4;
+   parameter SCALEIMMEDIATE =4'h 5;
+
    input logic Clk, nRead, nWrite, nReset;
+   input logic [15:0] address;
    input logic [255:0] ExeDataOut;
    output logic [255:0] MatrixDataOut;
 
@@ -38,7 +40,7 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset,
       if (nReset == 0) begin
 
       end
-      if (address[15:12]== 4'h 2000 && nReset != 0) begin
+      if (address[15:12]== 4'h 2 && nReset != 0) begin
          case (address[7:4])
             MULTIPLY:begin
                //nothing yet
@@ -46,9 +48,11 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset,
 
             ADD:begin
                if (address[3:0] == 3) begin //Do the addition operation
-                  for (int i = 0; i < 4; ++) begin
-                     for (int j = 0;  < 4; ++) begin
-                        result[i][j] = src1Data[i][j] + src2[i][j];
+                  for (int i = 0; i < 4; i++) begin
+                     for (int j = 0; j < 4; j++) begin
+                        result[i][j] = src1Data[i][j] + src2Data[i][j];
+                        $display ("Result [%d] [%d] is :%d\n",i,j,result[i][j]);
+
                      end
                   end
                end
@@ -57,7 +61,7 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset,
                   case (address[3:0])
                      0:src1Data = ExeDataOut;
                      1:src2Data = ExeDataOut;
-                     default://Nothing yet, Error code eventualy ;
+                     default: ;//Nothing yet, Error code eventualy ;
                   endcase
                end
 
@@ -84,7 +88,7 @@ module MatrixALU (Clk, ExeDataOut,MatrixDataOut, address, nRead, nWrite, nReset,
             SCALEIMMEDIATE: begin
                //nothing yet
             end
-            default://Does nothing for now, will determ and code for errors later  ;
+            default: ;//Does nothing for now, will determ and code for errors later  ;
          endcase
       end
    end

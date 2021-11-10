@@ -11,6 +11,7 @@ module top ();
 logic [255:0] InstructDataOut;
 logic [255:0] MemDataOut;
 logic [255:0] ExeDataOut;
+logic [255:0] MatrixDataOut;
 logic nRead,nWrite,nReset,Clk;
 logic [15:0] address;
 
@@ -18,7 +19,9 @@ InstructionMemory  U1(Clk,InstructDataOut, address, nRead,nReset);
 
 MainMemory  U2(Clk,MemDataOut,ExeDataOut, address, nRead,nWrite, nReset);
 
-Execution  U3(Clk,InstructDataOut,MemDataOut,ExeDataOut, address, nRead,nWrite, nReset);
+Execution  U3(Clk,InstructDataOut,MemDataOut,MatrixDataOut,ExeDataOut, address, nRead,nWrite, nReset);
+
+MatrixALU MatrixALU(Clk, ExeDataOut, MatrixDataOut, address, nRead, nWrite, nReset);
 
 TestExe  UTest(Clk,nReset);
 
@@ -28,6 +31,3 @@ TestExe  UTest(Clk,nReset);
  end
 
 endmodule
-
-
-	

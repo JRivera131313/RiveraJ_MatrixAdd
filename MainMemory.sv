@@ -50,8 +50,10 @@ module MainMemory(Clk, DataOut,DataIn, address, nRead, nWrite, nReset);
    //   allow both read and write at the same time.
    always_ff @ ( negedge nReset or posedge Clk) begin
       if (nReset == 0) begin
-         mainMemArray[0] <= matrixMemory0;
-		 mainMemArray[1] <= matrixMemory1;
+         //mainMemArray[0] <= matrixMemory0;
+		   //mainMemArray[1] <= matrixMemory1;
+         MainMemory[0] <= matrixMemory0;
+         MainMemory[1] <= matrixMemory1;
          DataOut <= 0;
       end
 
@@ -59,11 +61,13 @@ module MainMemory(Clk, DataOut,DataIn, address, nRead, nWrite, nReset);
          //read Commands
          if (nRead == 0) begin
             //Read data out of a chosen Matrix
-            DataOut <= mainMemArray[memLocation];
+            //DataOut <= mainMemArray[memLocation];
+            DataOut <= MainMemory[memLocation];
          end
          //Write commands
          if (nWrite == 0) begin
-               mainMemArray[memLocation] <= DataIn;
+               //mainMemArray[memLocation] <= DataIn;
+               MainMemory[memLocation] <= DataIn;
          end
       end //if
    end //always
