@@ -1,0 +1,43 @@
+C:/Users/jrriv/Documents/HDLProject/MainMemory.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/MainMemory.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module MainMemory
+
+Top level modules:
+	MainMemory
+
+} {} {}} C:/Users/jrriv/Documents/HDLProject/MatrixALU.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/MatrixALU.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module MatrixAlu
+
+Top level modules:
+	MatrixAlu
+
+} {} {}} C:/Users/jrriv/Documents/HDLProject/Top.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/Top.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module top
+
+Top level modules:
+	top
+
+} {} {}} C:/Users/jrriv/Documents/HDLProject/TestBench.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/TestBench.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module TestMatrix
+
+Top level modules:
+	TestMatrix
+
+} {} {}} C:/Users/jrriv/Documents/HDLProject/ExcutionEngin.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/ExcutionEngin.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module Execution
+
+Top level modules:
+	Execution
+
+} {} {}} C:/Users/jrriv/Documents/HDLProject/IntegerALU.sv {1 {vlog -work work -sv -stats=none C:/Users/jrriv/Documents/HDLProject/IntegerALU.sv
+Model Technology ModelSim - Intel FPGA Edition vlog 2021.1 Compiler 2021.02 Feb  3 2021
+-- Compiling module IntegerALU
+
+Top level modules:
+	IntegerALU
+
+} {} {}}
